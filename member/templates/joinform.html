@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+
+
+{% block javascript %}
+    <script>
+    $("input").keyup(function (event) {
+        var data = $(this).val()
+        var htmlname = this.name
+        var csrfmiddlewaretoken =$("input[name='csrfmiddlewaretoken']").val()
+
+          $.ajax({
+        type:"POST",
+        url: '{% url "ajaxjoin" %}',
+        data: {
+            'csrfmiddlewaretoken':csrfmiddlewaretoken,
+            'data': data,
+            'htmlname':htmlname
+        },
+        dataType: 'json',
+        success: function (data) {
+
+            $("div[name="+htmlname+"]").text(data.error_message)
+
+
+        }
+      });
+
+
+
+    });
+
+    </script>
+
+
+{% endblock %}
+
+{% block content %}
+      <form class="form-horizontal" method="post" action="{% url 'joinmember' %}">
+      {% csrf_token %}
+      <fieldset>
+          {% for field in form %}
+        <div class="form-group">
+  <label class="col-md-4 control-label" for="{{ field.id_for_label }}">{{field.html_name}}</label>
+  <div class="col-md-4">
+  <input id="{{ field.id_for_label }}" name="{{ field.html_name }}"
+         type={% if field.html_name == "password1" or field.html_name == "password2"  %}
+                 "password"
+                {% else %}
+                    "text"
+                {% endif %}
+         placeholder={{ field.name }} class="form-control"
+      required autofocus/>
+      <span>{{ field.help_text }}</span>
+  <div name="{{ field.html_name }}">
+
+  </div>
+  </div>
+</div>
+          {% endfor %}
+      <div class="form-group">
+  <label class="col-md-4 control-label" for="signup"></label>
+  <div class="col-md-4">
+    <button id="signup" name="signup" class="btn btn-success">등록</button>
+  </div>
+</div>
+      </fieldset>
+      </form>
+
+{% endblock %}
+
