@@ -16,6 +16,7 @@ Including another URLconf
 
 from django.conf import settings
 from django.conf.urls import url,include
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views
 
@@ -24,6 +25,7 @@ urlpatterns = [
     url(r'^member/',include('member.urls')),
     url(r'^board/',include('board.urls'))
 ]
+urlpatterns += static('upload_file',document_root = settings.MEDIA_ROOT)
 
 #디버그 툴바쓸거면 이거 해줘야 서버 오작동안함 ㅋ
 if settings.DEBUG:

@@ -10,11 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
+
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from django.conf.global_settings import STATICFILES_DIRS, LOGIN_URL, LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL, \
-    AUTH_USER_MODEL
+    AUTH_USER_MODEL, MEDIA_ROOT, MEDIA_URL
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -30,6 +31,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MEDIA_ROOT = os.path.join('C:\customboardproject','upload')
+MEDIA_URL = '/upload_file/'
 
 
 # Application definition
