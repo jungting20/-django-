@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django.http.response import HttpResponse,JsonResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate,login as jungho_login ,logout
+from django.contrib.auth import authenticate,login as auth_login ,logout
 # Create your views here.
 from member.forms import JoinForm, JoinvaldationForm
 
@@ -27,23 +27,29 @@ def joinmember(request):
 
 def login(request):
     if request.method == "POST":
+
             user = authenticate(username = request.POST.get('username'),
                                 password = request.POST.get('password'),)
             if user is not None:
                 if user.is_active:
-                    jungho_login(request,user)
+                    auth_login(request,user)
                     request.session['realname'] = user.realname
+                    if request.GET.get('next'):
+                        return redirect(request.GET.get('next'))
                     return redirect('boardlist')
             else:
                 return HttpResponse("아이디 비번 확인좀")
     else:
+
         form = AuthenticationForm()
         return render(request,'login.html',context={
-            'form':form
+            'form':form,
+            'next':request.GET.get('next')
         })
 
 def logout(request):
     try:
+
         logout(request)
         del request.session['realname']
         return redirect('login')
@@ -55,6 +61,8 @@ def joinmemberajax(request):
     datadict = {}
     datadict[htmlname] = request.POST.get('data')
     datadict['csrfmiddlewaretoken'] = request.POST.get('csrfmiddlewaretoken')
+    #join 밸리데이션폼 이걸 잘써야한다
+    print('밸리데이션?')
     form = JoinvaldationForm(datadict)
     errordata = {
         'error_message':form.errors.get(htmlname)

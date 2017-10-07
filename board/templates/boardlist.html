@@ -1,5 +1,49 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <h1>안녕하세유 여기는 보드리스트</h1>
+    <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>글번호</th>
+        <th>작성자</th>
+      <th>제목</th>
+      <th>작성일</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for list in boardlist %}
+      <tr>
+        <td>{{ list.id }}</td>
+        <td>{{ list.author }}</td>
+          <td><a href="../{{ list.id }}/">{{ list.title }}</a></td>
+          <td>{{ list.created_at | date:'Y년-m월-d일 H시:i분' }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+
+
 {% endblock %}

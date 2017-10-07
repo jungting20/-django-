@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    {{ board.id }}
+    {{ board.content }}
+    {{ board.author }}
+    {% if board.image %}
+    <img src="{{ board.image.url }}"/>
+    {% endif %}
+{% endblock %}

@@ -1,6 +1,11 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+    {% if next %}
+        <script>
+        alert('로그인 하세요')
+        </script>
+    {% endif %}
      <form class="form-signin" method="post">
      {% csrf_token %}
         <h2 class="form-signin-heading">로그인</h2>

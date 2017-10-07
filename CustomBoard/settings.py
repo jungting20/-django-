@@ -15,7 +15,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from django.conf.global_settings import STATICFILES_DIRS, LOGIN_URL, LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL, \
-    AUTH_USER_MODEL, MEDIA_ROOT, MEDIA_URL
+    AUTH_USER_MODEL, MEDIA_ROOT, MEDIA_URL, SESSION_COOKIE_AGE, SESSION_EXPIRE_AT_BROWSER_CLOSE
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -148,6 +148,12 @@ LOGIN_URL = '/member/login/'
 LOGIN_REDIRECT_URL = '/board/'
 
 AUTH_USER_MODEL = 'member.User'
+
+
+
+
+
+
 
 
 
